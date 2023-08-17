@@ -170,7 +170,6 @@ export function createMultiform(handleData: (data: FormData) => Promise<boolean>
         form = ref
 
         // set form's novalidate attribute
-        // !!! make this optional? if the user wants, it can just trigger the default validation behaviour
         ref.setAttribute("novalidate", "");
 
         // handle the onsubmit event
@@ -206,8 +205,7 @@ export function createMultiform(handleData: (data: FormData) => Promise<boolean>
                     const submissionResult = await handleData(allFormData)
                     setResponse(submissionResult)
                 }
-            } else {
-              // !!! this should happen on its own with the default form validation?
+            } else if (!autoValidate) {
                 // autofocus the first invalid form element
                 const firstInvalid = ref.querySelector(":invalid") as HTMLElement
                 firstInvalid?.focus()
