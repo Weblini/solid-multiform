@@ -182,9 +182,9 @@ export function createMultiform(
           setStep(step() + 1)
         } else {
           // combine all FormData objects
-          let allFormData = new FormData()
+          const allFormData = new FormData()
           for (const stepData of formDataArray) {
-            for (let [key, val] of stepData.entries()) {
+            for (const [key, val] of stepData.entries()) {
               allFormData.append(key, val)
             }
           }
@@ -198,11 +198,14 @@ export function createMultiform(
         }
       } else if (!autoValidate) {
         // autofocus the first invalid form element
-        const firstInvalid = ref.querySelector(':invalid') as HTMLElement
+        const firstInvalid = ref.querySelector(':invalid') as HTMLElement | undefined
         firstInvalid?.focus()
       }
     }
   }
+
+  // https://stackoverflow.com/questions/76915621/solidjs-directives-with-use-throw-errors-for-typescript-in-jsx
+  true && formHandler // eslint-disable-line @typescript-eslint/no-unnecessary-condition
 
   return { TheForm, FormStep, resetForm }
 }
@@ -228,18 +231,6 @@ export function sendFormData(fetchEndpoint: string) {
       return false
     }
   }
-}
-
-// !!! this won't work for some types of input
-// helper function that changes form data into JS object
-function objectifyFormData(formData: FormData) {
-  let object: { [index: string]: FormDataEntryValue } = {}
-
-  for (const [key, val] of formData.entries()) {
-    object[key] = val
-  }
-
-  return object
 }
 
 // base for input element with interactive validity style & error text
@@ -303,10 +294,10 @@ function repopulateInputs(form: HTMLFormElement, formData?: FormData) {
 
       if (inputs.length === 1) {
         // if there is just one, handle checkboxes vs others correctly
-        const onlyInput = (inputs[0] as HTMLInputElement) || HTMLTextAreaElement
+        const onlyInput = inputs[0] as HTMLInputElement
         switch (onlyInput.type) {
           case 'checkbox':
-            ;(onlyInput as HTMLInputElement).checked = !!value
+            onlyInput.checked = !!value
             break
           default:
             onlyInput.value = value as string
