@@ -56,7 +56,7 @@ async function shoutOutData(formData: FormData) {
 
 function CustomIndicator(props: IndicatorProps) {
   return (
-    <p class='order-first ml-auto mb-3 mt-1'>{props.current} of {props.total}</p>
+    <p class='ml-auto mb-3 mt-1'>{props.current} of {props.total}</p>
   )
 }
 

@@ -35,13 +35,13 @@ interface TheFormProps {
 
 export function createMultiform(handleData: (data: FormData) => Promise<boolean>, autoValidate = true, withIndicator?: boolean ,autofocus?: boolean) {
     // track total number of steps
-    let steps = 0
+    const [total, setTotal] = createSignal(0);
 
     // track current step
     const [step, setStep] = createSignal(1);
 
     // derived signals for step in multistep form
-    const isLast = () => step() === steps
+    const isLast = () => step() === total()
     const notFirst = () => step() > 1
     const stepIndex = () => step() -1
 
@@ -113,15 +113,15 @@ export function createMultiform(handleData: (data: FormData) => Promise<boolean>
               )}>
                 
               <form use:formHandler class={props.formStyle || ""}>
-                {props.children}
-
                 { withIndicator &&
                   <Show
                     when={props.indicator}
-                    fallback={<p>{step()}/{steps}</p>}>
-                    <Dynamic component={props.indicator} current={step()} total={steps}/>
+                    fallback={<p>{step()}/{total()}</p>}>
+                    <Dynamic component={props.indicator} current={step()} total={total()}/>
                   </Show>
                 }
+
+                {props.children}
 
                 <div class={props.btnWrapperStyle || ""}>
                     <Show when={notFirst()} >
@@ -152,10 +152,10 @@ export function createMultiform(handleData: (data: FormData) => Promise<boolean>
     // component that wraps around each step of a form and controls when it should be displayed
     function FormStep(props: {children: JSX.Element}) {
         // increase the total steps value
-        steps++
+        setTotal(total() + 1)
 
         // create local step value for this step
-        const thisStep = steps
+        const thisStep = total()
 
         return (
             <Show when={step() === thisStep}>
