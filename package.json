@@ -1,6 +1,6 @@
 {
   "name": "solid-multiform",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A SolidJS helper that handles multistep logic for Your uncontrolled forms.",
   "license": "MIT",
   "author": "weblini",
