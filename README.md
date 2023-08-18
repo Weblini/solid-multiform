@@ -31,7 +31,7 @@ import createMultiform from 'solid-multiform'
 
 function YourComponent() {
 
-  const { TheForm, FormStep } = createMultiform(true)
+  const { TheForm, FormStep } = createMultiform(yourAsyncSubmitionHandler)
 
   return (
     <TheForm>
@@ -129,16 +129,16 @@ Displays navigation buttons for changing steps and submitting the form.
 Once the form is submitted and a response comes back from the [submitHandler](#submithandler) it replaces the form element with the failed or succeeded element.
 
 ```tsx
-btnStyle?: string, // applied to each button unless mainBtnStyle is provided
-mainBtnStyle?: string, // applied to the main button instead of btnStyle
-btnWrapperStyle?: string, // applied to wrapper div of nav buttons
-formStyle?: string, // applied to form element
-indicator?: Component<IndicatorProps>,
-failed?: JSX.Element, // to be displayed if form submission failed
-suceeded?: JSX.Element, // to be displayed if form submission suceeded
-back?: JSX.Element, // custom back button label
-next?: JSX.Element, // custom next button label
-submit?: JSX.Element, // custom submit button label
+btnStyle?: string // applied to each button unless mainBtnStyle is provided
+mainBtnStyle?: string // applied to the main button instead of btnStyle
+btnWrapperStyle?: string // applied to wrapper div of nav buttons
+formStyle?: string // applied to form element
+indicator?: Component<IndicatorProps>
+failed?: JSX.Element // to be displayed if form submission failed
+suceeded?: JSX.Element // to be displayed if form submission suceeded
+back?: JSX.Element // custom back button label
+next?: JSX.Element // custom next button label
+submit?: JSX.Element // custom submit button label
 sending?: JSX.Element // custom submit button label when waiting for submission to complete
 ```
 
@@ -146,7 +146,7 @@ Takes optional props for styling, custom elements for navigation labels, success
 
 ```tsx
 interface IndicatorProps {
-  current: number, // current step (starting at 1)
+  current: number // current step (starting at 1)
   total: number // total number of steps
 }
 ```
@@ -196,8 +196,6 @@ Forwards all attributes to the underlying input element and accepts props for st
 Displays validity errors only after the input looses focus or the user tries to move to the next step. Hides them as soon as the input becomes valid.
 
 #### Props
-name: string;
-  type?: string;
 
 ##### name
 
@@ -211,7 +209,7 @@ A string that will be used as the name attribute of the undelying input element.
 
 Sets the type attribute of the underlying input element.
 
-If not provided falls back to `text`.
+If not provided falls back to `type=text`.
 
 ##### inputStyle
 
