@@ -159,6 +159,12 @@ Should only be placed inside [TheForm component](#theform).
 
 Populate with whatever each step of the form requires.
 
+##### resetForm()
+
+`function() => void`
+
+A function that resets the multistep form to it's initial state.
+
 ### sendFormData()
 
 Creates and returns an async function that performs a fetch request sending data from the form as 
